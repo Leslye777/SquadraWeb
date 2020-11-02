@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Api.Controllers
+namespace SquadraWeb.Api.Controllers
 {
-    [ApiController]
+
+[ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
