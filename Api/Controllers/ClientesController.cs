@@ -45,19 +45,26 @@ namespace SquadraWeb.Api.Controllers
 
             return cliente;
         }
-
         // PUT: api/Clientes/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCliente(int id, Cliente cliente)
+        public async Task<IActionResult> PutCliente(int id, ClienteDTO cliente)
         {
-            if (id != cliente.Id)
+            Cliente aux = new Cliente();
+
+            aux.Id = id;
+            aux.Cpf = cliente.Cpf;
+            aux.Endereco = cliente.Endereco;
+            aux.Nome = cliente.Nome;
+            aux.Telefone = cliente.Telefone;
+
+            if (id != aux.Id)
             {
-                return BadRequest();
+                return BadRequest("Deu ruim");
             }
 
-            _context.Entry(cliente).State = EntityState.Modified;
+            _context.Entry(aux).State = EntityState.Modified;
 
             try
             {
@@ -67,7 +74,7 @@ namespace SquadraWeb.Api.Controllers
             {
                 if (!ClienteExists(id))
                 {
-                    return NotFound();
+                    return NotFound("Cliente não encontrado");
                 }
                 else
                 {
@@ -154,22 +161,6 @@ namespace SquadraWeb.Api.Controllers
             return cliente;
         }
 
-        //Atualiza O registro Deejado
-        /// <param name="Id"></param>
-        /// <param name="cliente"></param>
-        /// 
-        //[HttpPut("{Id}")]
-        //public Cliente Put(int Id, [FromBody] Cliente cliente)
-        //{
-        //    var auxCliente = _context.Cliente.Find(Id);
-        //    auxCliente.Nome = cliente.Nome;
-        //    auxCliente.Cpf = cliente.Cpf;
-        //    auxCliente.Endereco = cliente.Endereco;
-        //    auxCliente.Telefone = cliente.Telefone;
-
-
-        //    return auxCliente;
-        //}
 
 
     }
