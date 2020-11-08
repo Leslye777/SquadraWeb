@@ -43,15 +43,6 @@ namespace SquadraWeb.Api.Controllers
         }
 
 
-        // GET: api/Vendas
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Venda>>> GetComprasDeUmCliente()
-        {
-            return await _context.Venda.ToListAsync();
-        }
-
-
-
         //Não sera possivel alterar nem mesmo remover vendas concluidas 
 
 
@@ -73,10 +64,13 @@ namespace SquadraWeb.Api.Controllers
             aux.IdLivro = venda.IdLivro; 
             aux.Quantidade = venda.Quantidade;
             aux.Total = CalculoTotal(venda.Quantidade, venda.IdLivro);
-            aux.DataCompra = DateTime.Now.ToUniversalTime();
+            aux.DataCompra = DateTime.Now;
             
 
             _context.Venda.Add(aux);
+            
+
+            (_context.Livro.Find(aux.IdLivro)).Quantidade =(_context.Livro.Find(aux.IdLivro).Quantidade) - aux.Quantidade;
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetVenda", new { id = aux.Id }, aux);

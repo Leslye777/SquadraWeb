@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace SquadraWeb.Api.Models
 {
@@ -11,8 +12,11 @@ namespace SquadraWeb.Api.Models
         public int Id { get; set; }
         public DateTime? DataCompra { get; set; }
         public decimal? Total { get; set; }
-
+        
+        [JsonIgnore]
         public virtual Cliente Cliente { get; set; }
+
+        [JsonIgnore]
         public virtual Livro Livro { get; set; }
     }
 }
