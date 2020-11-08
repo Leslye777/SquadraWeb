@@ -46,14 +46,23 @@ namespace SquadraWeb.Api.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutLivro(string id, Livro livro)
+        public async Task<IActionResult> PutLivro(string id, LivroDTO livro)
         {
-            if (id != livro.Isbn)
+            Livro aux = new Livro();
+
+            aux.Autor = livro.Autor;
+            aux.Editora = livro.Editora;
+            aux.Isbn = livro.Isbn;
+            aux.Preco = livro.Preco;
+            aux.Quantidade = livro.Quantidade;
+            aux.Titulo = livro.Titulo;
+
+            if (id != aux.Isbn)
             {
                 return BadRequest();
             }
 
-            _context.Entry(livro).State = EntityState.Modified;
+            _context.Entry(aux).State = EntityState.Modified;
 
             try
             {
@@ -63,7 +72,7 @@ namespace SquadraWeb.Api.Controllers
             {
                 if (!LivroExists(id))
                 {
-                    return NotFound();
+                    return NotFound("Não Encontrado");
                 }
                 else
                 {
@@ -78,18 +87,28 @@ namespace SquadraWeb.Api.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Livro>> PostLivro(Livro livro)
+        public async Task<ActionResult<Livro>> PostLivro(LivroDTO livro)
         {
-            _context.Livro.Add(livro);
+            Livro aux = new Livro();
+            
+            aux.Autor = livro.Autor;
+            aux.Editora = livro.Editora;
+            aux.Isbn = livro.Isbn;
+            aux.Preco = livro.Preco;
+            aux.Quantidade = livro.Quantidade;
+            aux.Titulo = livro.Titulo;
+          
+            
+            _context.Livro.Add(aux);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
-                if (LivroExists(livro.Isbn))
+                if (LivroExists(aux.Isbn))
                 {
-                    return Conflict();
+                    return Conflict("Livro Já Cadastrado");
                 }
                 else
                 {
@@ -97,7 +116,7 @@ namespace SquadraWeb.Api.Controllers
                 }
             }
 
-            return CreatedAtAction("GetLivro", new { id = livro.Isbn }, livro);
+            return CreatedAtAction("GetLivro", new { id = aux.Isbn }, aux);
         }
 
         // DELETE: api/Livros/5
@@ -107,7 +126,7 @@ namespace SquadraWeb.Api.Controllers
             var livro = await _context.Livro.FindAsync(id);
             if (livro == null)
             {
-                return NotFound();
+                return NotFound("Não encontrado");
             }
 
             _context.Livro.Remove(livro);
@@ -120,5 +139,6 @@ namespace SquadraWeb.Api.Controllers
         {
             return _context.Livro.Any(e => e.Isbn == id);
         }
+
     }
 }

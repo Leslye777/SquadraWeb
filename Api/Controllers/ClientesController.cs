@@ -97,10 +97,17 @@ namespace SquadraWeb.Api.Controllers
             aux.Nome = cliente.Nome;
             aux.Telefone = cliente.Telefone;
 
-            _context.Cliente.Add(aux);
-            _context.SaveChanges();
 
-            return CreatedAtAction("GetCliente", new { id = aux.Id }, aux);
+            if (CpfCadastrado(aux.Cpf) == false)
+            {
+                _context.Cliente.Add(aux);
+
+                _context.SaveChanges();
+
+                return CreatedAtAction("GetCliente", new { id = aux.Id }, aux);
+            }
+
+            return BadRequest("CPF Cadastrado");
         }
 
         // DELETE: api/Clientes/5
@@ -119,10 +126,6 @@ namespace SquadraWeb.Api.Controllers
             return cliente;
         }
 
-        private bool ClienteExists(int id)
-        {
-            return _context.Cliente.Any(e => e.Id == id);
-        }
 
         //Conta quantos registros existem
         [HttpGet]
@@ -135,7 +138,7 @@ namespace SquadraWeb.Api.Controllers
         //Busca Registro pelo nome
         [HttpGet]
         [Route("BuscaNome")]
-        public ActionResult<Cliente>GetClienteByName(String nome)
+        public ActionResult<Cliente> GetClienteByName(String nome)
         {
             var cliente = _context.Cliente.FirstOrDefault(Cliente => Cliente.Nome == nome);
 
@@ -160,6 +163,24 @@ namespace SquadraWeb.Api.Controllers
 
             return cliente;
         }
+
+
+
+
+        private bool ClienteExists(int id)
+        {
+            return _context.Cliente.Any(e => e.Id == id);
+        }
+
+        private bool CpfCadastrado(string cpf)
+        {
+            return _context.Cliente.Any(e => e.Cpf == cpf);
+        }
+
+
+
+
+
 
 
 
