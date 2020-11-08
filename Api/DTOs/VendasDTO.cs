@@ -9,6 +9,6 @@ namespace SquadraWeb.Api.Models
         public int? IdCliente { get; set; }
         public int Quantidade { get; set; }
         public int Id { get; set; }
-        public decimal? Total { get; set; }
+        
     }
 }

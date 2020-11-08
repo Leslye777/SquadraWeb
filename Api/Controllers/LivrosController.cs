@@ -135,6 +135,23 @@ namespace SquadraWeb.Api.Controllers
             return livro;
         }
 
+        //Busca Livro pelo titulo
+        [HttpGet]
+        [Route("BuscaTitulo")]
+        public ActionResult<Livro> GetLivroByTitle(String titulo)
+        {
+            var livro = _context.Livro.FirstOrDefault(Livro => Livro.Titulo == titulo);
+
+            if (livro == null)
+            {
+                return NotFound("Livro nao Encontrado");
+            }
+
+            return livro;
+        }
+
+
+
         private bool LivroExists(string id)
         {
             return _context.Livro.Any(e => e.Isbn == id);

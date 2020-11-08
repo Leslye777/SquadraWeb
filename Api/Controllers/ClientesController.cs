@@ -144,7 +144,7 @@ namespace SquadraWeb.Api.Controllers
 
             if (cliente == null)
             {
-                return NotFound();
+                return NotFound("Nao encontrado");
             }
 
             return cliente;
@@ -153,12 +153,12 @@ namespace SquadraWeb.Api.Controllers
         //Busca Registro pelo CPF
         [HttpGet]
         [Route("BuscaCPF")]
-        public async Task<ActionResult<Cliente>> GetClienteByCPF(String cpf)
+        public ActionResult<Cliente> GetClienteByCPF(String cpf)
         {
             var cliente = _context.Cliente.FirstOrDefault(Cliente => Cliente.Cpf == cpf);
             if (cliente == null)
             {
-                return NotFound();
+                return NotFound("Não Encontrado");
             }
 
             return cliente;
@@ -176,12 +176,6 @@ namespace SquadraWeb.Api.Controllers
         {
             return _context.Cliente.Any(e => e.Cpf == cpf);
         }
-
-
-
-
-
-
 
 
     }
