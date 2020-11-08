@@ -10,6 +10,6 @@ toda vez que ele for vendido e verificar se há o livro em estoque antes de vend
 Optei por realizar um teste unitario que testa a controller cliente, mais especificamente o metodo  GetClienteByName, o teste foi satisfatorio e os resultados foram dentro do 
 esperado. O banco de dados utilizado está disponivel para download. 
 
-#Agradecimentos 
+# Agradecimentos 
 Agradeço a Ana Eliza Bastos por todo conhecimento e paciencia transmitidos durante o curso e a Squadra pela oportunidade de participar desse projeto  incrivel projeto que 
 com certeza serei grato por toda a minha vida.
