@@ -6,8 +6,8 @@ using System.Text;
 using Xunit;
 using SQLitePCL;
 using Microsoft.EntityFrameworkCore;
-using SquadraWeb.Api;
 using System.Data.Common;
+using SquadraWeb.Api;
 using SquadraWeb.Api.DTOs;
 
 namespace SquadraWebTest
